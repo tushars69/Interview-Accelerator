@@ -1,0 +1,50 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Database ---
+*.db
+*.sqlite3
+backend/interview_accelerator.db
+
+# --- Poetry ---
+poetry.lock.bak
+
+# --- Streamlit ---
+.streamlit/secrets.toml
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+nohup.out
+
+# --- Testing / coverage ---
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- Misc ---
+*.wav
+*.mp3
+!frontend/assets/**/*.wav

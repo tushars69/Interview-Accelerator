@@ -1,0 +1,181 @@
+tushar_singh-freedom-pc@tushar-freedom-pc:~/Documents/interview-accelerator/frontend$ poetry run streamlit run streamlit_app.py
+The currently activated Python version 3.14.2 is not supported by the project (>=3.11,<3.13).
+Trying to find and use a compatible version. 
+Using python3.12 (3.12.2)
+2026-08-23 20:11:08.860 Uvicorn server started on :::8501
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.193.146.78:8501
+
+  Help agents write better Streamlit apps?
+  Install the official Streamlit skills by running streamlit skills in your terminal.
+
+2026-08-23 20:17:40.283 Uncaught app execution
+Traceback (most recent call last):
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+             ^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 837, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/Documents/interview-accelerator/frontend/streamlit_app.py", line 529, in <module>
+    STAGE_RENDERERS.get(st.session_state.stage, render_dashboard)()
+  File "/home/tushar_singh-freedom-pc/Documents/interview-accelerator/frontend/streamlit_app.py", line 278, in render_candidate_analysis
+    st.plotly_chart(fit_gauge(fit.get("score_percent", 0)), use_container_width=True, config={"displayModeBar": False})
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/Documents/interview-accelerator/frontend/streamlit_app.py", line 236, in fit_gauge
+    fig = go.Figure(
+          ^^^^^^^^^
+AttributeError: 'function' object has no attribute 'Figure'
+tushar_singh-freedom-pc@tushar-freedom-pc:~/Documents/interview-accelerator/backend$ poetry run uvicorn app.main:app --reload --port 8000
+The currently activated Python version 3.14.2 is not supported by the project (>=3.11,<3.13).
+Trying to find and use a compatible version. 
+Using python3.12 (3.12.2)
+INFO:     Will watch for changes in these directories: ['/home/tushar_singh-freedom-pc/Documents/interview-accelerator/backend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [22283] using WatchFiles
+INFO:     Started server process [22902]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59290 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59294 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59298 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59304 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56098 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56108 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56124 - "POST /analyze/extract-text HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56130 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56136 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56142 - "POST /analyze/extract-text HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51568 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51582 - "GET /report/history/all HTTP/1.1" 200 OK
+Groq chat_json call failed
+Traceback (most recent call last):
+  File "/home/tushar_singh-freedom-pc/Documents/interview-accelerator/backend/app/core/groq_client.py", line 77, in chat_json
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/groq/resources/chat/completions.py", line 462, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/groq/_base_client.py", line 1284, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/groq/_base_client.py", line 1071, in request
+    raise self._make_status_error_from_response(err.response) from None
+groq.BadRequestError: Error code: 400 - {'error': {'message': "Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'json_validate_failed', 'failed_generation': 'max completion tokens reached before generating a valid document'}}
+INFO:     127.0.0.1:51588 - "POST /analyze HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/tushar_singh-freedom-pc/Documents/interview-accelerator/backend/app/core/groq_client.py", line 77, in chat_json
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/groq/resources/chat/completions.py", line 462, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/groq/_base_client.py", line 1284, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/groq/_base_client.py", line 1071, in request
+    raise self._make_status_error_from_response(err.response) from None
+groq.BadRequestError: Error code: 400 - {'error': {'message': "Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'json_validate_failed', 'failed_generation': 'max completion tokens reached before generating a valid document'}}
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/starlette/middleware/cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/starlette/routing.py", line 670, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/fastapi/routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/fastapi/routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/fastapi/routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/fastapi/routing.py", line 354, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2641, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/.cache/pypoetry/virtualenvs/interview-accelerator-ez681wMM-py3.12/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1033, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/Documents/interview-accelerator/backend/app/routers/analysis.py", line 37, in analyze
+    role_analysis, resume_analysis, job_fit = analysis_service.run_full_analysis(
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/Documents/interview-accelerator/backend/app/services/analysis_service.py", line 46, in run_full_analysis
+    resume_analysis = analyze_resume(resume_text, role_analysis)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/Documents/interview-accelerator/backend/app/services/analysis_service.py", line 20, in analyze_resume
+    data = chat_json(
+           ^^^^^^^^^^
+  File "/home/tushar_singh-freedom-pc/Documents/interview-accelerator/backend/app/core/groq_client.py", line 91, in chat_json
+    raise GroqError(f"Chat completion failed: {exc}") from exc
+app.core.groq_client.GroqError: Chat completion failed: Error code: 400 - {'error': {'message': "Failed to generate JSON. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'json_validate_failed', 'failed_generation': 'max completion tokens reached before generating a valid document'}}
+INFO:     127.0.0.1:33266 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33272 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33286 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35616 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35628 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35638 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35646 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35648 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35654 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50036 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50042 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50050 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50066 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50068 - "POST /analyze HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39064 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39074 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37574 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37584 - "GET /report/history/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37590 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37600 - "GET /report/history/all HTTP/1.1" 200 OK
