@@ -142,6 +142,7 @@ def chat_json(
     if _supports_reasoning_effort(model_name):
         kwargs["reasoning_effort"] = reasoning_effort
     try:
+        kwargs.pop("reasoning_effort", None)
         response = _call_with_rate_limit_retry(lambda: client.chat.completions.create(**kwargs))
         raw = response.choices[0].message.content
         if not raw or not raw.strip():
