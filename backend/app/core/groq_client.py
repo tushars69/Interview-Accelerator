@@ -65,6 +65,14 @@ def _supports_reasoning_effort(model_name: str) -> bool:
     return "gpt-oss" in model_name or "qwen3" in model_name
 
 
+def _unexpected_kwarg_from_error(exc: TypeError) -> str | None:
+    """Parses '...got an unexpected keyword argument 'x'' out of a TypeError
+    message so the caller knows exactly which kwarg to drop and retry
+    without, rather than guessing."""
+    match = re.search(r"unexpected keyword argument '(\w+)'", str(exc))
+    return match.group(1) if match else None
+
+
 def _seconds_to_wait(exc: RateLimitError, default: float = 20.0) -> float:
     """
     Groq's 429 message includes the exact wait time, e.g. "Please try again
@@ -142,7 +150,6 @@ def chat_json(
     if _supports_reasoning_effort(model_name):
         kwargs["reasoning_effort"] = reasoning_effort
     try:
-        kwargs.pop("reasoning_effort", None)
         response = _call_with_rate_limit_retry(lambda: client.chat.completions.create(**kwargs))
         raw = response.choices[0].message.content
         if not raw or not raw.strip():
@@ -153,6 +160,32 @@ def chat_json(
         return _extract_json(raw)
     except GroqError:
         raise
+    except TypeError as exc:
+        # Guards against dependency drift: if the installed `groq` SDK
+        # version predates a keyword argument we send (this exact bug hit
+        # production once already — a stale requirements.txt shipped a much
+        # older SDK than was tested locally), degrade gracefully by retrying
+        # without it instead of hard-crashing every single request.
+        bad_kwarg = _unexpected_kwarg_from_error(exc)
+        if bad_kwarg and bad_kwarg in kwargs:
+            logger.warning(
+                "Installed groq SDK doesn't support '%s' — retrying without it. "
+                "Consider upgrading the groq package.", bad_kwarg,
+            )
+            retry_kwargs = {k: v for k, v in kwargs.items() if k != bad_kwarg}
+            try:
+                response = _call_with_rate_limit_retry(lambda: client.chat.completions.create(**retry_kwargs))
+                raw = response.choices[0].message.content
+                if not raw or not raw.strip():
+                    raise GroqError("Model returned an empty response on retry without the unsupported argument.")
+                return _extract_json(raw)
+            except GroqError:
+                raise
+            except Exception as retry_exc:  # noqa: BLE001
+                logger.exception("Groq chat_json retry (without unsupported kwarg) also failed")
+                raise GroqError(f"Chat completion failed: {retry_exc}") from retry_exc
+        logger.exception("Groq chat_json call failed with a TypeError")
+        raise GroqError(f"Chat completion failed: {exc}") from exc
     except RateLimitError as exc:
         logger.exception("Groq chat_json call failed after retries")
         raise GroqError(
