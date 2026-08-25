@@ -80,11 +80,7 @@ with st.sidebar:
     st.caption("When on, the AI speaks questions aloud and you can answer by mic.")
 
     st.session_state.video_mode = st.toggle("📹 Video mode", value=st.session_state.video_mode)
-    st.caption(
-        "Shows your live camera next to the AI interviewer during the interview — cosmetic "
-        "only, nothing is recorded, uploaded, or analysed, so it doesn't use any API quota."
-    )
-
+    st.caption("Shows your live camera next to the AI interviewer during the interview")
     st.markdown("---")
     if st.button("🔄 Start a new candidate", use_container_width=True):
         reset_all()
@@ -344,11 +340,8 @@ def render_video_panel() -> None:
     same restriction as the microphone used elsewhere in this app.
     """
     html = """
-    <div style="display:flex; gap:14px; font-family:'Inter',sans-serif;">
-      <div style="flex:1; background:linear-gradient(135deg, rgba(108,92,231,0.25), rgba(0,206,201,0.15));
-                  border:1px solid rgba(108,92,231,0.4); border-radius:16px; padding:18px;
-                  display:flex; flex-direction:column; align-items:center; justify-content:center;
-                  min-height:180px;">
+    <div class="video-panel-wrap">
+      <div class="ai-interviewer-panel">
         <div style="width:64px; height:64px; border-radius:50%; background:rgba(255,255,255,0.08);
                     display:flex; align-items:center; justify-content:center; font-size:32px;
                     animation:pulseGlow 2.2s ease-in-out infinite;">🤖</div>
@@ -359,16 +352,38 @@ def render_video_panel() -> None:
           <span style="color:#9BF6DF; font-size:0.75rem;">Live</span>
         </div>
       </div>
-      <div style="flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
-                  border-radius:16px; padding:8px; min-height:180px; display:flex;
-                  align-items:center; justify-content:center; overflow:hidden; position:relative;">
-        <video id="candidateSelfView" autoplay playsinline muted
-               style="width:100%; height:170px; object-fit:cover; border-radius:12px; background:#0A0A12;"></video>
-        <div id="camStatus" style="position:absolute; bottom:14px; left:14px; color:#FFB3B3;
-                    font-size:0.78rem; font-family:'Inter',sans-serif;"></div>
+      <div class="candidate-video-panel">
+        <video id="candidateSelfView" autoplay playsinline muted></video>
+        <div id="camStatus"></div>
       </div>
     </div>
     <style>
+      html, body { margin:0; padding:0; }
+      .video-panel-wrap {
+        display:flex; flex-wrap:wrap; gap:14px; font-family:'Inter',sans-serif;
+        width:100%; box-sizing:border-box;
+      }
+      .ai-interviewer-panel {
+        flex:1 1 240px; background:linear-gradient(135deg, rgba(108,92,231,0.25), rgba(0,206,201,0.15));
+        border:1px solid rgba(108,92,231,0.4); border-radius:16px; padding:18px;
+        display:flex; flex-direction:column; align-items:center; justify-content:center;
+        aspect-ratio:16/9; box-sizing:border-box;
+      }
+      .candidate-video-panel {
+        flex:1 1 240px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+        border-radius:16px; padding:8px; display:flex; align-items:center; justify-content:center;
+        overflow:hidden; position:relative; aspect-ratio:16/9; box-sizing:border-box;
+      }
+      .candidate-video-panel video {
+        width:100%; height:100%; object-fit:cover; border-radius:12px; background:#0A0A12;
+      }
+      #camStatus {
+        position:absolute; bottom:14px; left:14px; color:#FFB3B3;
+        font-size:0.78rem; font-family:'Inter',sans-serif;
+      }
+      @media (max-width: 480px) {
+        .ai-interviewer-panel, .candidate-video-panel { flex-basis:100%; aspect-ratio:4/3; }
+      }
       @keyframes pulseGlow {
         0%, 100% { box-shadow: 0 0 0 0 rgba(0,206,201,0.35); }
         50% { box-shadow: 0 0 0 10px rgba(0,206,201,0); }
@@ -396,27 +411,7 @@ def render_video_panel() -> None:
       })();
     </script>
     """
-    components.html(html, height=200)
-
-
-def render_interview() -> None:
-    hero("AI Interview Simulator", "Answer naturally — the AI adapts its next question to what you just said.")
-
-    turn = st.session_state.current_turn
-    if not turn:
-        st.warning("Interview not started — go back and start it from the Candidate Fit screen.")
-        if st.button("← Back"):
-            goto_stage("candidate_analysis")
-        return
-
-    level = turn["level"]
-    st.markdown(f'<span class="level-badge level-{level}">{LEVEL_LABELS.get(level, level)}</span>', unsafe_allow_html=True)
-    st.progress(min(turn["question_number_overall"] / 15, 1.0), text=turn["level_progress"])
-    st.caption(f"Adaptive difficulty: {DIFFICULTY_EMOJI.get(turn['difficulty'], turn['difficulty'])}")
-
-    if st.session_state.video_mode:
-        render_video_panel()
-        st.caption("Camera preview is local to your browser only — nothing is recorded, uploaded, or analysed.")
+    components.html(html, height=280)
 
     question = turn["question"]
     st.markdown(f'<div class="ai-question">🤖 <b>Interviewer:</b> {question}</div>', unsafe_allow_html=True)
