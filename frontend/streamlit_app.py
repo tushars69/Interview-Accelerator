@@ -62,7 +62,7 @@ def goto_stage(stage: str) -> None:
 # Sidebar — backend status, history, restart
 # ---------------------------------------------------------------------------
 with st.sidebar:
-    st.markdown("### 🎯 Interview Accelerator")
+    st.markdown("### Interview Accelerator")
     st.caption("AI-powered interview prep")
 
     try:
@@ -90,7 +90,7 @@ with st.sidebar:
         st.rerun()
 
     st.markdown("---")
-    st.markdown("#### 📚 Interview History")
+    st.markdown("####  Interview History")
     try:
         history = api.get_history()
         if not history:
