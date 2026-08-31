@@ -63,7 +63,7 @@ def goto_stage(stage: str) -> None:
 # ---------------------------------------------------------------------------
 with st.sidebar:
     st.markdown("### 🎯 Interview Accelerator")
-    st.caption("AI-powered interview prep, built on Groq.")
+    st.caption("AI-powered interview prep")
 
     try:
         health = api.health_check()
@@ -81,8 +81,7 @@ with st.sidebar:
 
     st.session_state.video_mode = st.toggle("📹 Video mode", value=st.session_state.video_mode)
     st.caption(
-        "Shows your live camera next to the AI interviewer during the interview — cosmetic "
-        "only, nothing is recorded, uploaded, or analysed, so it doesn't use any API quota."
+        "Shows your live camera next to the AI interviewer during the interview"
     )
 
     st.markdown("---")
@@ -427,7 +426,7 @@ def render_interview() -> None:
 
     if st.session_state.video_mode:
         render_video_panel()
-        st.caption("Camera preview is local to your browser only — nothing is recorded, uploaded, or analysed.")
+        st.caption("")
 
     question = turn["question"]
     st.markdown(f'<div class="ai-question">🤖 <b>Interviewer:</b> {question}</div>', unsafe_allow_html=True)
