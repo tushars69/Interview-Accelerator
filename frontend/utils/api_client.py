@@ -5,8 +5,21 @@ from __future__ import annotations
 import os
 
 import requests
+import streamlit as st
 
-BACKEND_URL = os.environ.get("BACKEND_URL", "http://localhost:8000")
+
+def _get_backend_url() -> str:
+    # Streamlit Cloud "Secrets" values land in st.secrets, NOT in os.environ,
+    # so check secrets first and fall back to a real env var, then localhost.
+    try:
+        if "BACKEND_URL" in st.secrets:
+            return st.secrets["BACKEND_URL"]
+    except Exception:
+        pass
+    return os.environ.get("BACKEND_URL", "http://localhost:8000")
+
+
+BACKEND_URL = _get_backend_url()
 TIMEOUT = 90  # LLM calls (esp. analysis + report) can take a little while
 
 
